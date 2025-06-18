@@ -1,0 +1,31 @@
+<html>
+<body>
+    <h1>Multiple P2P Downloads Test</h1>
+    <div id="downloads"></div>
+    <script>
+        const testFiles = ${JSON.stringify([
+            { name: 'file1.txt', content: 'First P2P download file content' },
+            { name: 'file2.txt', content: 'Second P2P download file content' },
+            { name: 'file3.txt', content: 'Third P2P download file content' }
+        ])};
+        const container = document.getElementById('downloads');
+        
+        testFiles.forEach((file, index) => {
+            const button = document.createElement('button');
+            button.textContent = \`Download \${file.name}\`;
+            button.onclick = () => {
+                const blob = new Blob([file.content], { type: 'text/plain' });
+                const blobUrl = URL.createObjectURL(blob);
+                
+                const link = document.createElement('a');
+                link.download = file.name;
+                link.href = blobUrl;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+            container.appendChild(button);
+        });
+    </script>
+</body>
+</html>

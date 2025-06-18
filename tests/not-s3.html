@@ -1,0 +1,20 @@
+<html>
+<body>
+    <h1>P2P Download S3 Test</h1>
+    <button id="downloadBtn">Download P2P Test File</button>
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const testData = 'P2P Download Test - Should Not Upload to S3';
+            const blob = new Blob([testData], { type: 'text/plain' });
+            const blobUrl = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.download = 'p2p-test.txt';
+            link.href = blobUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+</html>
