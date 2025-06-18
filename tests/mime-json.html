@@ -1,0 +1,20 @@
+<html>
+    <body>
+        <h1>MIME Type Test: application/json</h1>
+        <button id="downloadBtn">Download JSON File</button>
+        <script>
+            document.getElementById('downloadBtn').addEventListener('click', () => {
+                const content = '{"test": "json", "p2p": true}';
+                const blob = new Blob([content], { type: 'application/json' });
+                const blobUrl = URL.createObjectURL(blob);
+                
+                const link = document.createElement('a');
+                link.download = 'test.json';
+                link.href = blobUrl;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        </script>
+    </body>
+</html>
