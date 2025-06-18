@@ -1,0 +1,20 @@
+<html>
+<body>
+    <h1>P2P Download Content Verification</h1>
+    <button id="testDownload">Download Content Test</button>
+    <script>
+        document.getElementById('testDownload').addEventListener('click', () => {
+            const testData = `This is a test file for P2P download verification.\nLine 2 of the test file.\nEnd of file.`;
+            const blob = new Blob([testData], { type: 'text/plain' });
+            const blobUrl = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.download = 'content-test.txt';
+            link.href = blobUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+</html>
