@@ -1,0 +1,40 @@
+<html>
+<body>
+    <h1>Browser Context P2P Test</h1>
+    <button id="contextTest">Test Browser Context</button>
+    <div id="results"></div>
+    <script>
+        document.getElementById('contextTest').addEventListener('click', async () => {
+            const resultsDiv = document.getElementById('results');
+            
+            // Create a blob download
+            const testData = 'Browser context P2P download test';
+            const blob = new Blob([testData], { type: 'text/plain' });
+            const blobUrl = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.download = 'context-test.txt';
+            link.href = blobUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Wait and check the capture
+            setTimeout(async () => {
+                try {
+                    const extractedData = await window._anchorExtractDownloadData();
+                    const decodedContent = atob(extractedData);
+                    
+                    resultsDiv.innerHTML = `
+                        <p>Blobs captured: ${window.generatedBlobs.length}</p>
+                        <p>Extraction successful: ${decodedContent === testData}</p>
+                        <p>Content matches: ${decodedContent}</p>
+                    `;
+                } catch (error) {
+                    resultsDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
